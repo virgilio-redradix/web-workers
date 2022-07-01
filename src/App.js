@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+
+import { FetchInMainThread } from './FetchInMainThread'
+import { FetchWithOneWorker } from './FetchWithOneWorker'
+import { FetchWithWorkers } from './FetchWithWorkers'
 
 function App() {
+  const [count, setCount] = useState(50)
+  const [test, setTest] = useState('workers')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <input
+        value={count}
+        onChange={event => {
+          setCount(event.target.value)
+        }}
+      />
+
+      <button onClick={() => setTest('main')}>Fetch data in main thread</button>
+      <button onClick={() => setTest('worker')}>
+        Create one worker to fetch data
+      </button>
+      <button onClick={() => setTest('workers')}>
+        Create one worker for each API call
+      </button>
+
+      {test === 'worker' ? (
+        <FetchWithOneWorker count={count} />
+      ) : test === 'workers' ? (
+        <FetchWithWorkers count={count} />
+      ) : (
+        <FetchInMainThread count={count} />
+      )}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
