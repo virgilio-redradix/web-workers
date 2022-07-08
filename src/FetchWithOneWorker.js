@@ -11,7 +11,7 @@ export const FetchWithOneWorker = ({ count }) => {
     }
 
     for (let i = 0; i < count; i++) {
-      worker.postMessage('getData')
+      worker.postMessage(process.env.REACT_APP_ENDPOINT)
     }
   }, [count])
 

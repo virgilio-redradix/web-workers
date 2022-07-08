@@ -1,10 +1,10 @@
-const fetchData = async () => {
-  const data = await fetch('http://numbersapi.com/random/math')
+const fetchData = async endpoint => {
+  const data = await fetch(endpoint)
   const result = await data.text()
   return result
 }
 
-onmessage = async () => {
-  const result = await fetchData()
+onmessage = async event => {
+  const result = await fetchData(event.data)
   postMessage(result)
 }

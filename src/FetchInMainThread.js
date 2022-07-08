@@ -5,7 +5,7 @@ export const FetchInMainThread = ({ count }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch('http://numbersapi.com/random/math')
+      const data = await fetch(process.env.REACT_APP_ENDPOINT)
       const result = await data.text()
       setResults(prev => [...prev, result])
     }
