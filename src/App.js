@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { FetchInMainThread } from './FetchInMainThread'
 import { FetchWithOneWorker } from './FetchWithOneWorker'
 import { FetchWithWorkers } from './FetchWithWorkers'
+import { FetchWithMaxWorkers } from './FetchWithMaxWorkers'
 
 function App() {
   const [count, setCount] = useState(50)
@@ -24,11 +25,16 @@ function App() {
       <button onClick={() => setTest('workers')}>
         Create one worker for each API call
       </button>
+      <button onClick={() => setTest('maxWorkers')}>
+        Distribute requests to the configured workers
+      </button>
 
       {test === 'worker' ? (
         <FetchWithOneWorker count={count} />
       ) : test === 'workers' ? (
         <FetchWithWorkers count={count} />
+      ) : test === 'maxWorkers' ? (
+        <FetchWithMaxWorkers count={count} />
       ) : (
         <FetchInMainThread count={count} />
       )}
