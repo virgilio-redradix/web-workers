@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 export const FetchWithOneWorker = ({ count }) => {
   const [results, setResults] = useState([])
+  const [worker, setWorker] = useState()
 
   useEffect(() => {
     const worker = new Worker('./worker.js')
@@ -10,10 +11,18 @@ export const FetchWithOneWorker = ({ count }) => {
       setResults(prev => [...prev, event.data])
     }
 
+    setWorker(worker)
+
     for (let i = 0; i < count; i++) {
       worker.postMessage(process.env.REACT_APP_ENDPOINT)
     }
   }, [count])
+
+  useEffect(() => {
+    if (results.length === count) {
+      worker.terminate()
+    }
+  }, [results.length, count, worker])
 
   return (
     <>
