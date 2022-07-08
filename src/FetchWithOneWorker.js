@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 
 export const FetchWithOneWorker = ({ count }) => {
   const [results, setResults] = useState([])
+  const [startDate, setStartDate] = useState(0)
   const [worker, setWorker] = useState()
 
   useEffect(() => {
+    setStartDate(Date.now())
+
     const worker = new Worker('./worker.js')
 
     worker.onmessage = event => {
@@ -20,9 +23,13 @@ export const FetchWithOneWorker = ({ count }) => {
 
   useEffect(() => {
     if (results.length === count) {
+      console.log(
+        `FetchWithOneWorker - Total time in ms: ${Date.now() - startDate}`,
+      )
+
       worker.terminate()
     }
-  }, [results.length, count, worker])
+  }, [results.length, count, startDate, worker])
 
   return (
     <>

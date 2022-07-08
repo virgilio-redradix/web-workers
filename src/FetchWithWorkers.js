@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 
 export const FetchWithWorkers = ({ count }) => {
   const [results, setResults] = useState([])
+  const [startDate, setStartDate] = useState(0)
 
   useEffect(() => {
+    setStartDate(Date.now())
+
     for (let i = 0; i < count; i++) {
       const worker = new Worker('./worker.js')
 
@@ -16,6 +19,14 @@ export const FetchWithWorkers = ({ count }) => {
       worker.postMessage(process.env.REACT_APP_ENDPOINT)
     }
   }, [count])
+
+  useEffect(() => {
+    if (results.length === count) {
+      console.log(
+        `FetchWithWorkers - Total time in ms: ${Date.now() - startDate}`,
+      )
+    }
+  }, [results.length, count, startDate])
 
   return (
     <>
