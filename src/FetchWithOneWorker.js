@@ -16,10 +16,14 @@ export const FetchWithOneWorker = ({ count }) => {
   }, [count])
 
   return (
-    <ol>
-      {results.map((result, index) => (
-        <li key={`${index}_${result}`}>{result}</li>
-      ))}
-    </ol>
+    <>
+      <h1>Fetch data with one worker</h1>
+
+      <ol>
+        {results.map((result, index) => (
+          <li key={`${index}_${result}`}>{result}</li>
+        ))}
+      </ol>
+    </>
   )
 }

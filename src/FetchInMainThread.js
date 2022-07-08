@@ -16,10 +16,14 @@ export const FetchInMainThread = ({ count }) => {
   }, [count])
 
   return (
-    <ol>
-      {results.map((result, index) => (
-        <li key={`${index}_${result}`}>{result}</li>
-      ))}
-    </ol>
+    <>
+      <h1>Fetch data from main thread</h1>
+
+      <ol>
+        {results.map((result, index) => (
+          <li key={`${index}_${result}`}>{result}</li>
+        ))}
+      </ol>
+    </>
   )
 }
